@@ -164,9 +164,12 @@ ros2 run pymoveit2 pick_and_place.py --ros-args -p target_color:=R
 
 * For Blue objects: `ros2 run pymoveit2 pick_and_place.py --ros-args -p target_color:=B`
 
+
+
+
 # 📁 Project Structure
 
-```
+```text
 src/
 ├── .devcontainer/               # VS Code Docker environment config
 ├── panda_description/           # Robot URDF, meshes, visuals
@@ -178,6 +181,45 @@ src/
     └── examples/
         └── pick_and_place.py    # Main logic
 ```
+
+
+# 🧩 Package Overview
+
+| Package | Description | Key Files |
+|---------|-------------|-----------|
+| **panda_description** | Robot model and visualization | `panda.urdf.xacro`, `meshes` |
+| **panda_controller** | Controller configurations | `panda_controllers.yaml` |
+| **panda_moveit** | Motion planning setup | MoveIt configs, `SRDF` |
+| **panda_vision** | Computer vision system | `color_detector.py` |
+| **panda_bringup** | System launcher | `pick_and_place.launch.py` |
+| **pymoveit2** | High-level control | `pick_and_place.py` |
+
+# 🚀 How It Works
+
+## System Architecture
+
+```text
+Camera Feed → Color Detection → Object Localization
+                                      ↓
+                               Motion Planning (MoveIt 2)
+                                      ↓
+                             Trajectory Execution
+                                      ↓
+                    Pick Object → Move to Bin → Place
+```
+
+## Detailed Workflow
+
+1. **Vision System** continuously monitors the workspace.
+2. **Color detector** identifies target color and computes 3D position.
+3. **PyMoveIt2** receives object coordinates.
+4. **MoveIt 2** plans collision-free trajectory.
+5. **Robot controller** executes motion.
+6. **Gripper** closes to grasp object.
+7. **Motion planner** computes path to sorting bin.
+8. **Robot** moves to designated area.
+9. **Gripper** opens to release object.
+10. **System** returns to home position and repeats.
 
 # 🛠️ Troubleshooting
 
