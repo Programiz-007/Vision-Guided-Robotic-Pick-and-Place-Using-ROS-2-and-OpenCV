@@ -1,0 +1,75 @@
+{
+  "name": "Panda Vision Bot Environment",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "privileged": true,
+  "workspaceMount": "source=${localWorkspaceFolder},target=/root/panda_ws/src,type=bind,consistency=cached",
+  "workspaceFolder": "/root/panda_ws/src",
+  "mounts": [
+    "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.Xauthority,target=/root/.Xauthority,type=bind"
+  ],
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "actionButtons": {
+          "defaultColor": "#ff0034",
+          "loadNpmCommands": false,
+          "reloadButton": "♻️",
+          "commands": [
+            {
+              "name": "Build WS",
+              "cwd": "/root/panda_ws",
+              "color": "yellow",
+              "singleInstance": true,
+              "command": "colcon build --symlink-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON && source install/setup.bash"
+            }
+          ]
+        },
+        "C_Cpp.default.intelliSenseMode": "gcc-x64",
+        "files.autoSave": "onFocusChange",
+        "ros.distro": "humble"
+      },
+      "extensions": [
+        "ms-iot.vscode-ros",
+        "althack.ament-task-provider",
+        "DotJoshJohnson.xml",
+        "ms-azuretools.vscode-docker",
+        "Ranch-Hand-Robotics.rde-pack",
+        "ms-python.python",
+        "ms-vscode.cpptools",
+        "redhat.vscode-yaml",
+        "seunlanlege.action-buttons",
+        "streetsidesoftware.code-spell-checker",
+        "ms-vscode.cmake-tools"
+      ]
+    }
+  },
+  "containerEnv": {
+    "DISPLAY": "${localEnv:DISPLAY}",
+    "QT_X11_NO_MITSHM": "1",
+    "NVIDIA_DRIVER_CAPABILITIES": "all",
+    "NVIDIA_VISIBLE_DEVICES": "all",
+    "ROS_DOMAIN_ID": "80"
+  },
+  "runArgs": [
+    "--privileged",
+    "--gpus=all",
+    "--cap-add=SYS_NICE",
+    "--ulimit=rtprio=99",
+    "--ulimit=rttime=-1",
+    "--cap-add=all",
+    "--security-opt=seccomp:unconfined",
+    "--security-opt=apparmor:unconfined",
+    "--volume=/dev:/dev",
+    "--volume=/media:/media:rw",
+    "--net=host",
+    "--ipc=host",
+    "--env", "NVIDIA_DRIVER_CAPABILITIES=all"
+  ],
+  "postCreateCommand": "cd /root/panda_ws && apt update && rosdep install --from-paths src -y --ignore-src --skip-keys=opencv_python --rosdistro=humble",
+  "initializeCommand": "xhost +local:root",
+  "remoteUser": "root"
+}
