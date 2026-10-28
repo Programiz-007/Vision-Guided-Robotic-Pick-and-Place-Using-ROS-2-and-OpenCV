@@ -63,14 +63,12 @@ Get up and running in minutes with our pre-built Dev Container! This method elim
    ```
    git clone https://github.com/Programiz-007/Vision-Guided-Robotic-Pick-and-Place-Using-ROS-2-and-OpenCV.git
    cd Vision-Guided-Robotic-Pick-and-Place-Using-ROS-2-and-OpenCV
-   
    ```
 
 2. Open the folder in VS Code:
 
    ```
    code .
-   
    ```
 
 ## 🚢 Step 2: Launch the Dev Container
@@ -79,7 +77,6 @@ Get up and running in minutes with our pre-built Dev Container! This method elim
 
    ```
    xhost +local:root
-   
    ```
 
 2. In VS Code, press `Ctrl+Shift+P` (or `Cmd+Shift+P` on Mac).
@@ -96,7 +93,6 @@ Once the container is running, open the integrated terminal in VS Code (`Ctrl+` 
 cd /root/panda_ws
 colcon build --symlink-install
 source install/setup.bash
-
 ```
 
 🎊 **You're now ready to run the project!** Skip to the [Running the Project](#-running-the-project) section.
@@ -120,14 +116,12 @@ If you prefer not to use Docker, follow this setup guide for a local Ubuntu 22.0
      ros-humble-moveit-setup-assistant ros-humble-ros2-control ros-humble-ros2-controllers \
      ros-humble-gazebo-ros2-control ros-humble-ros-gz ros-humble-cv-bridge \
      ros-humble-image-transport ros-humble-rqt-image-view
-   
    ```
 
 3. Install Python requirements:
 
    ```
    pip3 install --no-cache-dir opencv-python==4.10.0.84 numpy==1.24.4 transforms3d
-   
    ```
 
 ## 🔨 Step 2: Build Workspace
@@ -142,7 +136,6 @@ rosdep update
 rosdep install --from-paths src --ignore-src --skip-keys=opencv_python -r -y
 colcon build --symlink-install
 source install/setup.bash
-
 ```
 
 # ▶️ Running the Project
@@ -154,7 +147,6 @@ Open **two terminal windows** (if using Dev Containers, you can split the VS Cod
 ```
 source ~/panda_ws/install/setup.bash
 ros2 launch panda_bringup pick_and_place.launch.py
-
 ```
 
 *Wait for Gazebo, RViz, and MoveIt to fully initialize.*
@@ -164,7 +156,6 @@ ros2 launch panda_bringup pick_and_place.launch.py
 ```
 source ~/panda_ws/install/setup.bash
 ros2 run pymoveit2 pick_and_place.py --ros-args -p target_color:=R
-
 ```
 
 **Change colors by stopping** (`Ctrl+C`) **and rerunning with a different parameter:**
@@ -186,7 +177,6 @@ src/
 └── pymoveit2/                   # Python MoveIt 2 interface
     └── examples/
         └── pick_and_place.py    # Main logic
-
 ```
 
 # 🛠️ Troubleshooting
